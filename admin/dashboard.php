@@ -173,52 +173,63 @@ if ($stmt = $pdo->prepare($sql)) {
         </div>
     </div>
 
-    <div class="container">
-        <h3>User Accounts</h3>
-        <table id="userAccounts" class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>Role</th>
-                    <th>Registration Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($userAccounts as $user): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($user['username']); ?></td>
-                        <td><?php echo htmlspecialchars($user['user_type']); ?></td>
-                        <td><?php echo date("Y-m-d H:i:s", strtotime($user['created_at'])); ?></td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-
-        <h3>Recent Logins</h3>
-        <table id="recentLogin" class="table table-bordered" id="recentLoginsTable">
-            <thead>
-                <tr>
-
-                    <th>No.</th>
-                    <th>Username</th>
-                    <th>Role</th>
-                    <th>Login Timestamp</th>
-                    <th>Time Elapsed</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($recentLogins as $login): ?>
-                    <tr data-login-time="<?php echo htmlspecialchars($login['login_time']); ?>">
-                        <td><?php echo htmlspecialchars($login['login_id']); ?></td>
-
-                        <td><?php echo htmlspecialchars($login['username']); ?></td>
-                        <td><?php echo htmlspecialchars($login['user_type']); ?></td>
-                        <td><?php echo date("Y-m-d H:i:s", strtotime($login['login_time'])); ?></td>
-                        <td class="time-elapsed"></td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>User Accounts</h3>
+                        <table id="userAccounts" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Role</th>
+                                    <th>Registration Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($userAccounts as $user): ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($user['username']); ?></td>
+                                        <td><?php echo htmlspecialchars($user['user_type']); ?></td>
+                                        <td><?php echo date("Y-m-d H:i:s", strtotime($user['created_at'])); ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Recent Logins</h3>
+                        <table id="recentLogin" class="table table-bordered" id="recentLoginsTable">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Username</th>
+                                    <th>Role</th>
+                                    <th>Login Timestamp</th>
+                                    <th>Time Elapsed</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($recentLogins as $login): ?>
+                                    <tr data-login-time="<?php echo htmlspecialchars($login['login_time']); ?>">
+                                        <td><?php echo htmlspecialchars($login['login_id']); ?></td>
+                                        <td><?php echo htmlspecialchars($login['username']); ?></td>
+                                        <td><?php echo htmlspecialchars($login['user_type']); ?></td>
+                                        <td><?php echo date("Y-m-d H:i:s", strtotime($login['login_time'])); ?></td>
+                                        <td class="time-elapsed"></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
         <button class="btn btn-primary" onclick="printToPDF()">Print to PDF</button>
     </div>
     <!--End Dashboard-->
