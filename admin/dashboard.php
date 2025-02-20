@@ -264,7 +264,7 @@ if ($stmt = $pdo->prepare($sql)) {
 
         // Apply the time elapsed to the table rows
         window.onload = function() {
-            const rows = document.querySelectorAll('#recentLoginsTable tbody tr');
+            const rows = document.querySelectorAll('#recentLogin tbody tr');
             rows.forEach(row => {
                 const loginTime = row.getAttribute('data-login-time');
                 const timeElapsedStr = timeElapsed(loginTime);
