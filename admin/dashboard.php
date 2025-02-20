@@ -70,6 +70,16 @@ if ($stmt = $pdo->prepare($sql)) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
+    <!--Datatables-->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"></script>
+    <script src="https://cdn.datatables.net/2.2.1/css/dataTables.bootstrap5.css"></script>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/2.2.1/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.2.1/js/dataTables.bootstrap5.js"></script>
+
     <style>
         .flex-container {
             display: flex;
@@ -165,7 +175,7 @@ if ($stmt = $pdo->prepare($sql)) {
 
     <div class="container">
         <h3>User Accounts</h3>
-        <table class="table table-bordered">
+        <table id="userAccounts" class="table table-bordered">
             <thead>
                 <tr>
                     <th>Username</th>
@@ -185,7 +195,7 @@ if ($stmt = $pdo->prepare($sql)) {
         </table>
 
         <h3>Recent Logins</h3>
-        <table class="table table-bordered" id="recentLoginsTable">
+        <table id="recentLogin" class="table table-bordered" id="recentLoginsTable">
             <thead>
                 <tr>
                     <th>Username</th>
@@ -257,6 +267,9 @@ if ($stmt = $pdo->prepare($sql)) {
                 row.querySelector('.time-elapsed').textContent = timeElapsedStr;
             });
         }
+
+        let table1 = new DataTable('#userAccounts');
+        let table2 = new DataTable('#recentLogin');
     </script>
 </body>
 
