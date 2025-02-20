@@ -138,115 +138,123 @@ if ($stmt = $pdo->prepare($sql)) {
     </nav>
     <h1 style="margin-left:20px">Hi, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>. Welcome to the dashboard.</h1>
 
-    <!--Start Dashboard-->
-    <div class="flex-container">
-        <!-- Card 1: Total Admin Users -->
-        <div class="card text-bg-success mb-3">
-            <div class="card-body">
-                <h5 class="card-title">Admin Users</h5>
-                <h1 id="totalAdmins"><?php echo $userStats['admin']; ?></h1>
+    <div id="dashboardContent">
+        <!--Start Dashboard-->
+        <div class="flex-container">
+            <!-- Card 1: Total Admin Users -->
+            <div class="card text-bg-success mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Admin Users</h5>
+                    <h1 id="totalAdmins"><?php echo $userStats['admin']; ?></h1>
+                </div>
+            </div>
+
+            <!-- Card 2: Total Users -->
+            <div class="card text-bg-primary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Users</h5>
+                    <h1 id="totalUsers"><?php echo $userStats['user']; ?></h1>
+                </div>
+            </div>
+
+            <!-- Card 3: Temp Users -->
+            <div class="card text-bg-danger text-white mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Temp Users</h5>
+                    <h1 id="totalTempUsers"><?php echo $userStats['temp-user']; ?></h1>
+                </div>
+            </div>
+
+            <!-- Card 4: Total User Accounts -->
+            <div class="card text-bg-warning text-white mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total Users</h5>
+                    <h1 id="totalAllUsers"><?php echo $userStats['total']; ?></h1>
+                </div>
             </div>
         </div>
 
-        <!-- Card 2: Total Users -->
-        <div class="card text-bg-primary mb-3">
-            <div class="card-body">
-                <h5 class="card-title">Users</h5>
-                <h1 id="totalUsers"><?php echo $userStats['user']; ?></h1>
-            </div>
-        </div>
-
-        <!-- Card 3: Temp Users -->
-        <div class="card text-bg-danger text-white mb-3">
-            <div class="card-body">
-                <h5 class="card-title">Temp Users</h5>
-                <h1 id="totalTempUsers"><?php echo $userStats['temp-user']; ?></h1>
-            </div>
-        </div>
-
-        <!-- Card 4: Total User Accounts -->
-        <div class="card text-bg-warning text-white mb-3">
-            <div class="card-body">
-                <h5 class="card-title">Total Users</h5>
-                <h1 id="totalAllUsers"><?php echo $userStats['total']; ?></h1>
-            </div>
-        </div>
-    </div>
-
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col">
-                <div class="card">
-                    <div class="card-body">
-                        <h3>User Accounts</h3>
-                        <table id="userAccounts" class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Username</th>
-                                    <th>Role</th>
-                                    <th>Registration Date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($userAccounts as $user): ?>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3>User Accounts</h3>
+                            <table id="userAccounts" class="table table-bordered">
+                                <thead>
                                     <tr>
-                                        <td><?php echo htmlspecialchars($user['username']); ?></td>
-                                        <td><?php echo htmlspecialchars($user['user_type']); ?></td>
-                                        <td><?php echo date("Y-m-d H:i:s", strtotime($user['created_at'])); ?></td>
+                                        <th>Username</th>
+                                        <th>Role</th>
+                                        <th>Registration Date</th>
                                     </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($userAccounts as $user): ?>
+                                        <tr>
+                                            <td><?php echo htmlspecialchars($user['username']); ?></td>
+                                            <td><?php echo htmlspecialchars($user['user_type']); ?></td>
+                                            <td><?php echo date("Y-m-d H:i:s", strtotime($user['created_at'])); ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3>Recent Logins</h3>
+                            <table id="recentLogin" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Username</th>
+                                        <th>Role</th>
+                                        <th>Login Timestamp</th>
+                                        <th>Time Elapsed</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($recentLogins as $login): ?>
+                                        <tr data-login-time="<?php echo htmlspecialchars($login['login_time']); ?>">
+                                            <td><?php echo htmlspecialchars($login['login_id']); ?></td>
+                                            <td><?php echo htmlspecialchars($login['username']); ?></td>
+                                            <td><?php echo htmlspecialchars($login['user_type']); ?></td>
+                                            <td><?php echo date("Y-m-d H:i:s", strtotime($login['login_time'])); ?></td>
+                                            <td class="time-elapsed"></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card">
-                    <div class="card-body">
-                        <h3>Recent Logins</h3>
-                        <table id="recentLogin" class="table table-bordered" id="recentLoginsTable">
-                            <thead>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>Username</th>
-                                    <th>Role</th>
-                                    <th>Login Timestamp</th>
-                                    <th>Time Elapsed</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($recentLogins as $login): ?>
-                                    <tr data-login-time="<?php echo htmlspecialchars($login['login_time']); ?>">
-                                        <td><?php echo htmlspecialchars($login['login_id']); ?></td>
-                                        <td><?php echo htmlspecialchars($login['username']); ?></td>
-                                        <td><?php echo htmlspecialchars($login['user_type']); ?></td>
-                                        <td><?php echo date("Y-m-d H:i:s", strtotime($login['login_time'])); ?></td>
-                                        <td class="time-elapsed"></td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+            <button class="btn btn-primary" onclick="printToPDF()">Print to PDF</button>
         </div>
-        <button class="btn btn-primary" onclick="printToPDF()">Print to PDF</button>
     </div>
-    <!--End Dashboard-->
+
+
 
     <script>
         function printToPDF() {
-            // Select the entire content between Start and End Dashboard tags
-            const element = document.querySelector("body"); // Select everything in the body, including cards and tables
-            html2canvas(element).then((canvas) => {
+            const element = document.getElementById("dashboardContent"); // Capture only the dashboard content
+            html2canvas(element, {
+                scale: 2
+            }).then((canvas) => {
                 const imgData = canvas.toDataURL("image/png");
-                const pdf = new jspdf.jsPDF("p", "mm", "a4");
-                const imgWidth = 190;
+                const pdf = new jspdf.jsPDF("landscape", "mm", "a4"); // Set PDF to landscape
+
+                const imgWidth = 287; // A4 width in landscape (210mm x 297mm)
                 const imgHeight = (canvas.height * imgWidth) / canvas.width;
-                pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
+
+                pdf.addImage(imgData, "PNG", 5, 5, imgWidth - 10, imgHeight);
                 pdf.save("dashboard.pdf");
             });
         }
+
+
 
         function timeElapsed(timestamp) {
             const currentTime = Date.now() / 1000;
