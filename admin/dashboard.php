@@ -51,7 +51,7 @@ if ($stmt = $pdo->prepare($sql)) {
 
 // Fetch recent logins
 $recentLogins = [];
-$sql = "SELECT u.username, u.user_type, l.login_time FROM login_logs l JOIN users u ON l.user_id = u.id ORDER BY l.login_time DESC LIMIT 10";
+$sql = "SELECT l.login_id, u.username, u.user_type, l.login_time FROM login_logs l JOIN users u ON l.user_id = u.id ORDER BY l.login_time DESC LIMIT 10";
 if ($stmt = $pdo->prepare($sql)) {
     if ($stmt->execute()) {
         $recentLogins = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -198,6 +198,8 @@ if ($stmt = $pdo->prepare($sql)) {
         <table id="recentLogin" class="table table-bordered" id="recentLoginsTable">
             <thead>
                 <tr>
+
+                    <th>No.</th>
                     <th>Username</th>
                     <th>Role</th>
                     <th>Login Timestamp</th>
@@ -207,6 +209,8 @@ if ($stmt = $pdo->prepare($sql)) {
             <tbody>
                 <?php foreach ($recentLogins as $login): ?>
                     <tr data-login-time="<?php echo htmlspecialchars($login['login_time']); ?>">
+                        <td><?php echo htmlspecialchars($login['login_id']); ?></td>
+
                         <td><?php echo htmlspecialchars($login['username']); ?></td>
                         <td><?php echo htmlspecialchars($login['user_type']); ?></td>
                         <td><?php echo date("Y-m-d H:i:s", strtotime($login['login_time'])); ?></td>
